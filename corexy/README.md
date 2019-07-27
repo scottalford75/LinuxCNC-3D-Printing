@@ -1,6 +1,6 @@
 # CoreXY translation for TrivKins
 
-When I developed the [Hypercube Evolution 3D printer] (https://www.thingiverse.com/thing:2254103) I chose the CoreXY motion system for its simplicity and low moving mas.
+When I developed the [Hypercube Evolution 3D printer](https://www.thingiverse.com/thing:2254103) I chose the CoreXY motion system for its simplicity and low moving mas.
 
 Originally the printer was controlled by a standard Marlin software that supports CoreXY and has no issues to Home this type of motion system.
 
