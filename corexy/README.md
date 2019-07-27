@@ -20,3 +20,12 @@ addf motion-command-handler servo-thread
 addf motion-controller servo-thread
 addf corexy.pos-cmd servo-thread
 ```
+
+## Installtion
+
+Like other HAL components it is simply installed using Halcompile and adding the compent to your HAL file and netting everying together. There is an example HAL file in the repo.
+
+'''
+$ halcompile --install corexy.c
+'''
+
