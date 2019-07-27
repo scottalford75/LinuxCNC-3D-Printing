@@ -15,8 +15,8 @@ However, CoreXY systems typically use homing / limit switches located on the Axe
 My solution is to treat the machine as a TrivKins kinematics machine but to wrap the kinematics motion component with a CoreXY translation for X and Y (Joint 0 and 1) to Motors 0 and 1. It works nicely and keeps the homing logic as we would normally expect.
 
 ```
-**addf corexy.pos-fb servo-thread**
+addf corexy.pos-fb servo-thread
 addf motion-command-handler servo-thread
 addf motion-controller servo-thread
-**addf corexy.pos-cmd servo-thread**
+addf corexy.pos-cmd servo-thread
 ```
