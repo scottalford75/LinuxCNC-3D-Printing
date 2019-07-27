@@ -62,8 +62,8 @@ typedef struct {
 	hal_float_t 	*ypos_cmd;			// pin: Y position command (position units)
 	hal_float_t 	*xpos_fb;			// pin: X position feedback (position units)
 	hal_float_t 	*ypos_fb;			// pin: Y position feedback (position units)
-	hal_float_t 	*m0pos_cmd;		// pin: Motor 0 position command (position units)
-	hal_float_t 	*m1pos_cmd;		// pin: Motor 1 position command (position units)
+	hal_float_t 	*m0pos_cmd;			// pin: Motor 0 position command (position units)
+	hal_float_t 	*m1pos_cmd;			// pin: Motor 1 position command (position units)
 	hal_float_t 	*m0pos_fb;			// pin: X position feedback (position units)
 	hal_float_t 	*m1pos_fb;			// pin: Y position feedback (position units)
 } data_t;
