@@ -1,0 +1,95 @@
+  <vbox>
+   <labelframe text ="Probekins">
+   <label text ="Surface Probe"></label>
+   <hbox>  
+    <label text ="X Count"></label>
+    <spinbox>
+     <width>"5"</width>
+     <halpin>"xcount"</halpin>
+     <min_>1</min_>
+     <max_>33</max_>
+     <initval>5</initval>
+     <resolution>1</resolution>
+     <format>"2.0f"</format>
+     <font>("Helvetica",10)</font>
+    </spinbox>
+    <label text ="X Incr"></label>
+    <spinbox>
+     <width>"5"</width>
+     <halpin>"xincrement"</halpin>
+     <min_>0.01</min_>
+     <max_>5</max_>
+     <initval>1</initval>
+     <resolution>0.1</resolution>
+     <format>"2.2f"</format>
+     <font>("Helvetica",10)</font>
+    </spinbox>
+   </hbox>
+   <hbox>  
+    <label text ="Y Count"></label>
+    <spinbox>
+     <width>"5"</width>
+     <halpin>"ycount"</halpin>
+     <min_>1</min_>
+     <max_>33</max_>
+     <initval>5</initval>
+     <resolution>1</resolution>
+     <format>"2.0f"</format>
+     <font>("Helvetica",10)</font>
+    </spinbox>
+    <label text ="Y Incr"></label>
+    <spinbox>
+     <width>"5"</width>
+     <halpin>"yincrement"</halpin>
+     <min_>0.01</min_>
+     <max_>5</max_>
+     <initval>1</initval>
+     <resolution>0.1</resolution>
+     <format>"2.2f"</format>
+     <font>("Helvetica",10)</font>
+    </spinbox>
+   </hbox>
+     <button>
+       <halpin>"probestl"</halpin>
+       <text>"Probe area and Load"</text>
+       <font>("Helvetica",10)</font>
+     </button>
+     <button>
+       <halpin>"clearstl"</halpin>
+       <text>"Clear STL Corr from memory"</text>
+       <font>("Helvetica",10)</font>
+     </button>
+     <checkbutton>
+       <halpin>"zcorr-enable"</halpin>
+       <text>"Enable Z Correction"</text>
+       <font>("Helvetica",10)</font>
+     </checkbutton>
+     <hbox>
+     <label>
+      <text>"Delta-Z"</text>
+      <font>("Helvetica",10)</font>
+     </label>
+     <number>
+       <halpin>"delta-z"</halpin>
+       <font>("Helvetica",10)</font>
+       <format>"+1.4f"</format>
+     </number>
+     </hbox>
+   </labelframe>
+
+   <labelframe text ="Probekins info">
+    <font>("Helvetica",12)</font>
+    <vbox>
+     <label><text>"With no XY offsets, set probe"</text></label>
+     <label><text>"at Z0 at top of material. Click"</text></label>
+     <label><text>"probe area. Wait until finished"</text></label>
+     <label><text>"then click checkbox to enable."</text></label>
+    </vbox>
+    <button>
+     <halpin>"visstl"</halpin>
+     <text>"visualize stl"</text>
+     <font>("Helvetica",10)</font>
+    </button>
+    <label><text>"Wait for window to appear"</text></label>
+   </labelframe>
+  </vbox>

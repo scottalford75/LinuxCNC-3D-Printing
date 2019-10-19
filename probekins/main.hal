@@ -1,0 +1,3 @@
+# size=14400 is memory size for stl file, may need to increase if probing too many points.
+loadrt probekins size=14400
+#add "num_aio=5" to the end of your existing "loadrt [EMCMOT]EMCMOT" line. to default is 3 analog inputs.

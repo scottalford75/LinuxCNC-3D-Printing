@@ -1,0 +1,4 @@
+#!/bin/bash
+# file to convert probe.txt to probe.stl
+probe2stl <probe.txt | stlcorr --load
+exit 0

@@ -1,0 +1,4 @@
+#!/bin/bash
+# file to visualize probe.txt -b option is minx,miny,max x,max y
+probe2stl <probe.txt | stlvis -b 0,0,50,50
+exit 0

@@ -1,0 +1,10 @@
+#for probekins buttons
+net xcount pyvcp.xcount => motion.analog-in-00
+net xincrement pyvcp.xincrement => motion.analog-in-01
+net ycount pyvcp.ycount => motion.analog-in-02
+net yincrement pyvcp.yincrement => motion.analog-in-03
+net probestl halui.mdi-command-00 <= pyvcp.probestl
+net clearstl halui.mdi-command-01 <= pyvcp.clearstl
+net visstl halui.mdi-command-02 <= pyvcp.visstl
+net zcorr-enable pyvcp.zcorr-enable => probekins.enable-z-correct
+net deltaz <= probekins.delta-z => pyvcp.delta-z

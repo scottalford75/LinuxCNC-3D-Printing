@@ -1,0 +1,58 @@
+Usage
+------
+probekins will offset your Z based on probe.txt in reference to the machine absolute coordinates.
+Clear all XY offsets so that the probe moves are your machine coords.
+choose the number, and distance between probe moves, with the 4 spinboxes.
+click "probe area and load" this will run probestl.ngc with your settings to probe the area.
+I probe mostly flat surfaces, so if you have a lot of Z variance you may need to edit the probe speeds and heights.
+after probing it will rapid to the start point, now click "enable Z correction"
+any jogs or movement will now move the Z to match your probed surface.
+following errors will be a problem if there are rapid changes in the correction, so watch out.
+
+Caution
+-------
+On my machine, sometimes it will randomly quit while probing with no errors.
+Then at some point in the future, when clicking a button the machine will move X a few inches positive.
+Not at all sure why this happens, hopefully it wont happen to you, I dont think it is anything with these files, but it's possible.
+
+Install
+-------
+
+custompanel.xml
+add this to your existing file
+note that although you can enter numbers into the pyvcp spinboxes, they arent recognized.
+you have to use the scroll wheel for the numbers to stick.
+
+main.ini
+add these lines to your machine ini file
+note that if you have mdi commands already specified, you will need to edit custom_postgui.hal to give them the right numbers.
+
+custom_postgui.hal
+add this to your custom_postgui.hal
+
+main.hal
+add this to your machine hal file
+note the comments in the file for memory size and analog inputs
+
+probestl.ngc
+copy this file to your [DISPLAY]program_prefix directory.
+note line 47 probe move at f250. may need to lower speed for your config
+note variables #7 and #8 for Z safe height, and probe depth, change if needed
+note log lines near end of file, these are to add machine boundaries as Z0 to help reduce following errors.
+
+M100, M101, M102
+copy these files to [DISPLAY]program_prefix directory.
+make sure they are executable
+in M102 edit -b numbers to match your machine limits
+
+
+follow the directions to install probekins @
+http://wiki.linuxcnc.org/cgi-bin/wiki.pl?ProbeKins
+
+in the archive directory /bin
+sudo cp * /usr/bin
+(copy all files to /usr/bin as root)
+I have changed the names to match the documentation, as they are different as downloaded from the website.
+http://git.mah.priv.at/gitweb?p=emc2-dev.git;a=tree;f=src/emc/kinematics;h=d9bd12cced17eaaef04d9102f2c7c3388b24559b;hb=refs/heads/probekins
+
+If your Z moves in the wrong direction in response to the correction, replace your probekins.ko with the probekins-invert.ko

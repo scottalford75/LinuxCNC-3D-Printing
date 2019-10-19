@@ -1,0 +1,4 @@
+#!/bin/bash
+# file to visualize probe.txt -b option is minx,miny,max x,max y
+stlcorr --clear
+exit 0
