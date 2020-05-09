@@ -45,3 +45,26 @@ There are no discrete functions to call. Once loaded the compent runs in user sp
 | compensation.fade-height  | float | in | compensation will be faded out up to this value |
 
 eoffset == scale * count
+
+## CONFIGURATION
+
+For the component to function, external offsets must be enabled for the Z axis and the component linked to the eoffsets pins.
+
+Place the compensation.py in your configuration ini directory and then add the following to your ini and hal files.
+
+In your ini file add an OFFSET_AV_RATIO parameter
+
+	[AXIS_Z]  
+	OFFSET_AV_RATIO = 0.2
+
+In your hal file 
+
+loadusr -Wn compensation python2 compensation.py probe-results.txt cubic
+
+	net xpos-cmd 				<= axis.x.pos-cmd				=> compensation.x-pos
+	net ypos-cmd 				<= axis.y.pos-cmd				=> compensation.y-pos
+	net zpos-cmd 				<= axis.z.pos-cmd				=> compensation.z-pos
+	net eoffset-enable		<= compensation.enable-out	=> axis.z.eoffset-enable
+	net eoffset-scale			<= compensation.scale		=> axis.z.eoffset-scale
+	net eoffset-counts		<= compensation.counts 		=> axis.z.eoffset-counts
+	net eoffset-clear			<= compensation.clear 		=> axis.z.eoffset-clear
