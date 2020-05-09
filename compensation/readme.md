@@ -16,7 +16,7 @@ The component utilises the external offsets feature of LinuxCNC. A probe data in
 
 The probe data file must have data on a regularly spaced grid. The file can be modified / updated at anytime while compensation is disabled (Don't probe whilst compensation is enabled). When compensation is next enabled, the compensation map will be recalculated.
 
-The component uses the Numpy **griddata** function to interpolate between the probe data points at 1mm resolution in X and Y. Moves outside of the probe data receive the compensation value at the edge of the compensation map so as not to have a jump / discontinuity.
+The component uses the Scipy **griddata** function to interpolate between the probe data points at 1mm resolution in X and Y. Moves outside of the probe data receive the compensation value at the edge of the compensation map so as not to have a jump / discontinuity.
 
 ![Compensation map](compensationMap.png)
 
