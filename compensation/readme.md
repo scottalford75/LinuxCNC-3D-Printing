@@ -18,6 +18,8 @@ The probe data file must have data on a regularly spaced grid. The file can be m
 
 The component uses the Numpy **griddata** function to interpolate between the probe data points at 1mm resolution in X and Y. Moves outside of the probe data receive the compensation value at the edge of the compensation map so as not to have a jump / discontinuity.
 
+![Compensation map](compensationMap.png)
+
 ## NAMING
 
 The names for pins, parameters, and functions are prefixed as:  
