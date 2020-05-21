@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# M107 in your G code program will run the Linux commands in this
+# shell script "batch" file, passing the P and Q variables as command
+# line arguments.
+
+# M code to set EXTRUDER 0 fan off
+
+echo "Usage: M107"
+
+# give the command line arguments descriptive names
+#P=$1
+#Q=$2
+
+halcmd sets ext0-fan-SP 0
+
+# if a M1nn command exits with nonzero status,
+# the gcode program exits.  So always exit 0.
+exit 0 ;# 0 for success

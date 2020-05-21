@@ -1,0 +1,30 @@
+#!/usr/bin/env python2
+
+# Note! Change the above "python2" to "python" is not using Arch Linux
+
+# M code to set EXTRUDER 0 temperature
+# M104 in your G code program will run the python code in this file, 
+# passing the P and Q variables as command line arguments.
+
+import sys
+import hal
+
+Mcode = 'M104'
+usage = 'Extruder temperature'
+pin = 'SP'
+signal = 'ext0-SP'
+
+h = hal.component(Mcode)
+
+print "Usage: " + Mcode + " Pn - where n is the " + usage
+
+P = sys.argv[1]
+Q = sys.argv[2]
+
+print 'Setting ' + usage + ' to ' + P
+
+h.newpin(pin, hal.HAL_FLOAT, hal.HAL_OUT)
+hal.connect(Mcode + '.' + pin, signal)
+
+h[pin] = P
+
