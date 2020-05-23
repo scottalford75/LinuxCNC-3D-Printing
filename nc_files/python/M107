@@ -3,7 +3,7 @@
 # Note! Change the above "python2" to "python" is not using Arch Linux
 
 # M code to set Fan speed
-# M106in your G code program will run the python code in this file, 
+# M107 in your G code program will run the python code in this file, 
 # passing the P and Q variables as command line arguments.
 
 import sys

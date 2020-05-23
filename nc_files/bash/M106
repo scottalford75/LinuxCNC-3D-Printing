@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# M107 in your G code program will run the Linux commands in this
+# M106 in your G code program will run the Linux commands in this
 # shell script "batch" file, passing the P and Q variables as command
 # line arguments.
 
