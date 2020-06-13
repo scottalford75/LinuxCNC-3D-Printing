@@ -46,7 +46,7 @@ class Compensation :
 		self.filename = sys.argv[1]
 		self.method = sys.argv[2]
 		
-		#default to cubic if not specified
+		# default to cubic if not specified
 		if self.method == "" : self.methond = "cubic"
 
 
@@ -76,7 +76,7 @@ class Compensation :
 		self.xi,self.yi = np.meshgrid(self.x,self.y)
 		
 		# interpolate, zi has all the offset values
-		self.zi = griddata((self.x_data,self.y_data),self.z_data,(self.yi,self.xi),method=self.method)
+		self.zi = griddata((self.x_data,self.y_data),self.z_data,(self.xi,self.yi),method=self.method)
 		#print self.zi
 
 		
@@ -96,7 +96,7 @@ class Compensation :
 		# get the nearest compensation offset and convert to counts (s32) with a scale (float) 
 		# Requested offset == counts * scale
 		self.scale = 0.001
-		zo = self.zi[self.Xn,self.Yn]
+		zo = self.zi[self.Yn,self.Xn]
 		compensation = int(zo / self.scale)
 		
 		return compensation
