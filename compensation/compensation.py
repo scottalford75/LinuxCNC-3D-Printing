@@ -47,7 +47,7 @@ class Compensation :
 		self.method = sys.argv[2]
 		
 		# default to cubic if not specified
-		if self.method == "" : self.methond = "cubic"
+		if self.method == "" : self.method = "cubic"
 
 
 	def loadMap(self) :
