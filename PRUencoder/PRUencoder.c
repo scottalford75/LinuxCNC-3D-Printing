@@ -23,7 +23,7 @@
 
 /* module information */
 MODULE_AUTHOR("Scott Alford");
-MODULE_DESCRIPTION("spiPRU raw encoder interface");
+MODULE_DESCRIPTION("Remora PRU raw encoder interface");
 MODULE_LICENSE("GPL v2");
 
 

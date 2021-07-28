@@ -182,7 +182,7 @@ class Compensation :
 						
 						if fadeHeight == 0 :
 							compScale = 1
-						elif zPos < fadeHeight:
+						elif zPos < fadeHeight :
 							compScale = (fadeHeight - zPos)/fadeHeight
 							if compScale > 1 :
 								compScale = 1
