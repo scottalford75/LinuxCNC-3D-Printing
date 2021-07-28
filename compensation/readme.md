@@ -52,6 +52,12 @@ For the component to function, external offsets must be enabled for the Z axis a
 
 Place the compensation.py in your configuration ini directory and then add the following to your ini and hal files.
 
+In your ini file enable HALUI to make the relative z position available
+
+	[HAL]  
+	HALUI = halui
+
+
 In your ini file add an OFFSET_AV_RATIO parameter
 
 	[AXIS_Z]  
@@ -61,11 +67,11 @@ In your hal file
 
 	loadusr -Wn compensation python compensation.py probe-results.txt cubic
 
-	net xpos-cmd 		<= axis.x.pos-cmd				=> compensation.x-pos
-	net ypos-cmd 		<= axis.y.pos-cmd				=> compensation.y-pos
+	net xpos-cmd 		<= axis.x.pos-cmd			=> compensation.x-pos
+	net ypos-cmd 		<= axis.y.pos-cmd			=> compensation.y-pos
 	net zpos-cmd 		<= halui.axis.z.pos-relative	=> compensation.z-pos
-	net eoffset-enable	<= compensation.enable-out		=> axis.z.eoffset-enable
-	net eoffset-scale	<= compensation.scale			=> axis.z.eoffset-scale
-	net eoffset-counts	<= compensation.counts 			=> axis.z.eoffset-counts
-	net eoffset-clear	<= compensation.clear 			=> axis.z.eoffset-clear
+	net eoffset-enable	<= compensation.enable-out	=> axis.z.eoffset-enable
+	net eoffset-scale	<= compensation.scale		=> axis.z.eoffset-scale
+	net eoffset-counts	<= compensation.counts 		=> axis.z.eoffset-counts
+	net eoffset-clear	<= compensation.clear 		=> axis.z.eoffset-clear
 	net compensation-on	<= compensation.enable-in
