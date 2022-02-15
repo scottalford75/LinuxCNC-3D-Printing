@@ -69,7 +69,7 @@ class Compensation :
 		print "	yMax = ", self.yMax
 
 		# target grid to interpolate to, 1 grid per mm
-		self.xSteps = (self.xMax-self.yMin)+1
+		self.xSteps = (self.xMax-self.xMin)+1
 		self.ySteps = (self.yMax-self.yMin)+1
 		self.x = np.linspace(self.xMin, self.xMax, self.xSteps)
 		self.y = np.linspace(self.yMin, self.yMax, self.ySteps)
