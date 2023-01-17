@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 """Copyright (C) 2020 Scott Alford, scottalford75@gmail.com
 
 This program is free software; you can redistribute it and/or modify
@@ -40,7 +40,7 @@ class Compensation :
 	def __init__(self) :
 		self.comp = {}
 		if len(sys.argv)<2:
-			print "ERROR! No input file name specified!"
+			print ("ERROR! No input file name specified!")
 			sys.exit()
 
 		self.filename = sys.argv[1]
@@ -63,10 +63,10 @@ class Compensation :
 		self.yMin = int(np.min(self.y_data))
 		self.yMax = int(np.max(self.y_data))
 
-		print "	xMin = ", self.xMin
-		print "	xMax = ", self.xMax
-		print "	yMin = ", self.yMin
-		print "	yMax = ", self.yMax
+		print (" xMin = ", self.xMin)
+		print (" xMax = ", self.xMax)
+		print (" yMin = ", self.yMin)
+		print (" yMax = ", self.yMax)
 
 		# target grid to interpolate to, 1 grid per mm
 		self.xSteps = (self.xMax-self.xMin)+1
