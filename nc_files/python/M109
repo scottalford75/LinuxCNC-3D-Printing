@@ -19,13 +19,13 @@ tolerance = 0.5
 
 h = hal.component(Mcode)
 
-print "Usage: " + Mcode + " Pn - where n is the " + usage
+print ("Usage: " + Mcode + " Pn - where n is the " + usage)
 
 # P and Q command line arguments
 P = sys.argv[1]
 Q = sys.argv[2]
 
-print 'Setting ' + usage + ' to ' + P
+print ('Setting ' + usage + ' to ' + P)
 
 h.newpin(pin, hal.HAL_FLOAT, hal.HAL_OUT)
 hal.connect(Mcode + '.' + pin, SP_signal)
@@ -40,4 +40,4 @@ while delta > tolerance:
     PV = hal.get_value(PV_signal)
     delta = float(P) - PV
 
-print "Temperature reached"
+print ("Temperature reached")
