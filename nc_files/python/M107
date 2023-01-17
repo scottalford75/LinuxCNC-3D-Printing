@@ -16,13 +16,13 @@ SP_signal = 'ext0-cooling-SP'
 
 h = hal.component(Mcode)
 
-print "Usage: " + Mcode
+print ("Usage: " + Mcode)
 
 # P and Q command line arguments
 P = sys.argv[1]
 Q = sys.argv[2]
 
-print 'Setting ' + usage
+print ('Setting ' + usage)
 
 h.newpin(pin, hal.HAL_FLOAT, hal.HAL_OUT)
 hal.connect(Mcode + '.' + pin, SP_signal)
