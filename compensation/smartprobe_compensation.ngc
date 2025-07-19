@@ -1,0 +1,118 @@
+%
+( Rectangular Probing                                                   )
+(                                                                       )
+( This program repeatedly probes in a regular XY grid and writes the    )
+( probed location to the file 'probe-results.txt' in the same directory )
+( as the .ini file                                                      )
+
+
+(Configuration section)
+
+(Consider logging at least the start point as zero, or add it to the file afterwards)
+(You can then use this as a point to visit to enable/disable external offsets later)
+(Recording all zero points around the part will mean that external offsets will only be non-zero in the probed region)
+(This is ideal, as external offsets can then be freely enabled and disabled anywhere outside the probed region)
+
+#<_x-start-pos> = 0  (X start position)
+#<_y-start-pos> = 0 (Y start position)
+
+#<_x-end-pos> = 15 (X end position, will be rounded up or down according to end-pos_roundup if the calculated number of columns is not an integer)
+#<_y-end-pos> = 15 (Y end position, will be rounded up or down according to end-pos_roundup if the calculated number of columns is not an integer)
+
+#<_end-pos_roundup> = 0 (set to 1 to roundup, else round down)
+(If the given parameters generate a non-integer number of columns and/or rows, set this parameter to 1 to roundup, meaning the actual probing area will exceed the specified end position)
+(Else, the number of columns and/or rows  will be rounded down to ensure specified end position value is not exceeded)
+
+#<_x-point-spacing> = 0.5 (X increment/spacing between columns)
+#<_y-point-spacing> = 0.5 (Y increment/spacing between rows)
+
+
+#<_z-safety-pos> = 10 (Z safety position - should be above the highest point on the part)
+#<_z-probe-min-pos> = 0 (Z probe minimum position - the Z min limit of probing moves and Z travel)
+
+#<_probe-xy-traverse-feedrate> = 250 (probe XY traverse feedrate - for all XY probing moves that do not record points)
+#<_probe-z-fast-feedrate> = 100 (probe Z slow feedrate - for initial Z touch at recording location, and recording points if the slow probe move is not enabled)
+#<_probe-z-retract-feedrate> = 300 (probe Z retract feedrate - for all Z retractions away from the part after contact is made)
+
+#<_use_slow_probe> = 0 (If not equal to 0, a successful Z probe hit at a point recording location will be followed with a slow probe move. If 0, this is disabled.)
+#<_probe-z-slow-feedrate> = 50 (probe Z slow feedrate - for recording points if the slow probe move is enabled)
+
+
+
+(End configuration section)
+
+O1 if [#<_end-pos_roundup> NE 1]
+    #<_x-num-columns> = FIX[[[#<_x-end-pos> - #<_x-start-pos>] / #<_x-point-spacing>] + 1] (X calculated Number of columns, rounded down)
+    #<_y-num-rows> = FIX[[[#<_y-end-pos> - #<_y-start-pos>] / #<_y-point-spacing>] + 1] (Y calculated Number of rows, rounded down)
+O1 else
+    #<_x-num-columns> = FUP[[[#<_x-end-pos> - #<_x-start-pos>] / #<_x-point-spacing>] + 1] (X calculated Number of columns, rounded up)
+    #<_y-num-rows> = FUP[[[#<_y-end-pos> - #<_y-start-pos>] / #<_y-point-spacing>] + 1] (Y calculated Number of rows, rounded up)
+O1 endif
+
+#<_y-row> = 0 #<_x-column> = 0 (initiate variables at 0 for current Y row and X column)
+
+
+
+(Program Start)
+
+G21 G90 G61
+
+G0 Z#<_z-safety-pos> (rapid to start point in Z)
+G0 X#<_x-start-pos> Y#<_y-start-pos> (rapid to start point in XY)
+
+(LOGOPEN,probe-results.txt)
+
+O2 while [#<_y-row> lt #<_y-num-rows>] (while Y row variable is less than Y end position:)
+    #<_x-column> = 0 (set X column variable to 0)
+    #<_y-target-pos> = [#<_y-start-pos> + [#<_y-point-spacing> * #<_y-row>]] (calculate Y target)
+    
+    #5070 = 1 (set the G38 probe result to successful as the initial state, means the O3 while below will always happen at least once)
+
+    O3 while [#5070 EQ 1] (if the probe result equals to 1 and is therefore successful:)
+        O5 if [#<_z> NE #<_z-safety-pos>] (only probe towards Z safety if we are not already there, primarily a fix for simulating this program)
+            G38.5 F#<_probe-z-retract-feedrate> Z#<_z-safety-pos> (retract probe away from workpiece up to Z safety position, stop on loss of contact)
+        O5 endif
+        G38.3 F#<_probe-xy-traverse-feedrate> Y#<_y-target-pos> (probe towards Y target position, stop on contact)
+    O3 endwhile
+
+    (should now be over the Y target position)
+
+    O4 while [#<_x-column> lt #<_x-num-columns>] (while the X position is less than the X end position:)
+        O6 if [[#<_y-row> / 2] - fix[#<_y-row> / 2] EQ 0] (defining the X target position to give the next point to move to:)
+            #<_x-target-pos> = [#<_x-start-pos> + [#<_x-point-spacing> * #<_x-column>]]
+        O6 else      
+            #<_x-target-pos> = [#<_x-start-pos> + [#<_x-point-spacing> * [#<_x-num-columns> - #<_x-column> - 1]]]
+        O6 endif
+
+        #5070 = 1 (set the G38 probe result to successful as the initial state, means the O7 while below will always happen at least once)
+
+        O7 while [#5070 EQ 1] (if the probe result equals to 1 and is therefore successful:)
+            O9 if [#<_z> NE #<_z-safety-pos>] (only probe towards Z safety if we are not already there, primarily a fix for simulating this program)
+                G38.5 F#<_probe-z-retract-feedrate> Z#<_z-safety-pos> (retract probe away from workpiece up to Z safety position, stop on loss of contact)
+            O9 endif
+            G38.3 F#<_probe-xy-traverse-feedrate> X#<_x-target-pos> (probe towards X target position, stop on contact)
+        O7 endwhile
+
+        (should now be over the X target position)
+
+        G38.3 F#<_probe-z-fast-feedrate> Z#<_z-probe-min-pos> (fast probe move toward workpiece, stop on contact, changed from G38.2 to G38.3 so it is not an error if this fails)
+
+        O8 if [[#5070 EQ 1] AND [#<_use_slow_probe> NE 0]] (if the fast Z probe move triggers and the slow probe moved is enabled:)
+            G38.5 F#<_probe-z-retract-feedrate> Z#<_z-safety-pos> (retract for slow probe move)
+            G38.3 F#<_probe-z-slow-feedrate> Z#<_z-probe-min-pos>  (slow probe move - changed from G38.2 to G38.3 so it is not an error if this fails)
+        O8 endif
+        
+        (LOG,#5061 #5062 #5063)
+
+        #<_x-column> = [#<_x-column> + 1] (increment the X column variable so the next x-target-position can be calculated)
+    O4 endwhile
+    
+    #<_y-row> = [#<_y-row> + 1] (increment the Y row variable)
+O2 endwhile
+
+(LOGCLOSE)
+
+
+G0 Z#<_z-safety-pos> (rapid to safety position)
+G0 X#<_x-start-pos> Y#<_y-start-pos> (rapid to start position)
+%
